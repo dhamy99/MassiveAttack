@@ -29,7 +29,6 @@ public class ShootEngine : MonoBehaviour
     {
         shoot.transform.position = transform.position;
         shoot.gameObject.SetActive(true);
-
     }
 
     private void releaseBullet(Shoot shoot)

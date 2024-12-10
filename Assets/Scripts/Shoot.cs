@@ -27,7 +27,7 @@ public class Shoot : MonoBehaviour
         transform.Translate(direction.normalized * speed * Time.deltaTime);   
 
 
-        //Release the bullet to te pool
+        //Release the bullet to the pool
         if(releaseTimer > releaseDelay)
         {
             poolParent.Release(this);
@@ -39,5 +39,14 @@ public class Shoot : MonoBehaviour
             poolParent.Release(this);
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D another)
+    {
+        //if the  bullet collisionate with an enemy will be released
+        if (this.gameObject.CompareTag("PlayerShoot") && another.gameObject.CompareTag("Enemy"))
+        {
+            poolParent.Release(this);
+        }
     }
 }
