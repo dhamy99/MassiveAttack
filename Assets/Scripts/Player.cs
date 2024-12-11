@@ -6,14 +6,19 @@ using UnityEngine.Pool;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] float shootDelay;
+    [SerializeField] private float shootDelay;
     private float timer = 0.5f;
     private int life = 100;
+    private int damage = 1;
+
+    [SerializeField] private HealthBar healthBar;
+
+    public int Damage { get => damage; set => damage = value; }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        healthBar.initializeHealthBar(life);
     }
 
     // Update is called once per frame
@@ -21,7 +26,6 @@ public class Player : MonoBehaviour
     {
         move();
         shoot();
-        
     }
 
     void move()
@@ -52,6 +56,7 @@ public class Player : MonoBehaviour
         if (another.gameObject.CompareTag("EnemyShoot") || another.gameObject.CompareTag("Enemy"))
         {
             life -= 20;
+            healthBar.UpdateHealthValue(life);
             Destroy(another.gameObject);
             if(life <= 0)
             {

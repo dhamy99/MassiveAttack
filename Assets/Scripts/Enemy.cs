@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] float shootDelay;
+    [SerializeField] protected float speed;
+    [SerializeField] protected float shootDelay;
+    [SerializeField] protected int lifes;
     private ObjectPool<Enemy> poolParent;
 
     public ObjectPool<Enemy> PoolParent { get => poolParent; set => poolParent = value; }
@@ -21,16 +23,15 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("disparo");
         Move();
     }
 
-    void Move()
+    private void Move()
     {
         transform.Translate(new Vector3(-1.0f , 0.0f , 0.0f).normalized * speed * Time.deltaTime);
     }
 
-    IEnumerator Shoot()
+    protected IEnumerator Shoot()
     {
         while (true)
         {
@@ -45,7 +46,12 @@ public class Enemy : MonoBehaviour
     {
         if (another.gameObject.CompareTag("PlayerShoot"))
         {
-            poolParent.Release(this);
+            lifes -= 1;
+            if(lifes == 0)
+            {
+                poolParent.Release(this);
+            }
+            
         }
     }
 }

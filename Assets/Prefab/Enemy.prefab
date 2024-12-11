@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   shootDelay: 2.5
+  lifes: 2
 --- !u!114 &7280640536132113673
 MonoBehaviour:
   m_ObjectHideFlags: 0
