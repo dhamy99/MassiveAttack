@@ -9,11 +9,7 @@ public class MainMenu : MonoBehaviour
     public void play() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    public void options()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+        Time.timeScale = 1.0f;
     }
 
     public void exit()

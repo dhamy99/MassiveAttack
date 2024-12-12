@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class Player : MonoBehaviour
     private int damage = 1;
 
     [SerializeField] private HealthBar healthBar;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject gameOver;
+    private Boolean isOver = false;
 
     public int Damage { get => damage; set => damage = value; }
 
@@ -26,6 +31,8 @@ public class Player : MonoBehaviour
     {
         move();
         shoot();
+        pause();
+        rebootGame();
     }
 
     void move()
@@ -60,8 +67,34 @@ public class Player : MonoBehaviour
             Destroy(another.gameObject);
             if(life <= 0)
             {
-                Destroy(this.gameObject);  
-            }
+                 
+                gameOver.SetActive(true);
+                Time.timeScale = 0.0f;
+                isOver = true;
+
+}
         }
+    }
+
+    private void pause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GetComponent<PauseMenu>().Pause();
+            pauseMenu.SetActive(true);
+        }
+    }
+
+    private void rebootGame()
+    {
+        if(isOver && Input.anyKeyDown)
+        {
+            gameOver.SetActive(false);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            isOver = false;
+            Destroy(this.gameObject);
+           
+        }
+        
     }
 }
