@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private int life = 100;
     private int damage = 1;
 
-    [SerializeField] private HealthBar healthBar;
+
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject gameOver;
     private Boolean isOver = false;
@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        healthBar.initializeHealthBar(life);
+
     }
 
     // Update is called once per frame
@@ -63,7 +63,6 @@ public class Player : MonoBehaviour
         if (another.gameObject.CompareTag("EnemyShoot") || another.gameObject.CompareTag("Enemy"))
         {
             life -= 20;
-            healthBar.UpdateHealthValue(life);
             Destroy(another.gameObject);
             if(life <= 0)
             {
@@ -87,7 +86,7 @@ public class Player : MonoBehaviour
 
     private void rebootGame()
     {
-        if(isOver && Input.anyKeyDown)
+        if(isOver && Input.GetKeyDown(KeyCode.Q))
         {
             gameOver.SetActive(false);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
